@@ -201,8 +201,8 @@
     if (isValid == false)
       e.preventDefault();
     else {
-      alert('Thank you for submitting');
-      var userData = {
+      // alert('Thank you for submitting');
+      let userData = {
         name: $('#name').val().trim(),
         photo: $('#photo').val().trim(),
         scores: [
@@ -219,7 +219,7 @@
       };
 
       console.log(userData)
-      $.post("/api/friends", userData)
+      $.post("/api/match", userData)
           .then(function(data) {
             console.log('survey.html', data);
         ;
