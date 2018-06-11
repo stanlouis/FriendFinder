@@ -10,19 +10,23 @@ module.exports = app => {
   app.post("/api/match", (req, res) => {
     let userData = req.body;
     let match = [];
-    function compatibility (arr1, arr2, index) {
+    function compatibility(arr1, arr2, index) {
       let totalDifference = 0;
       let i = 0;
       for (i; i < arr1.length; i++) {
         totalDifference += Math.abs(arr1[i] - arr2[i]);
       }
-      match.push({[index]:totalDifference});
+      match.push({ [index]: totalDifference });
     }
     friends.forEach((friend, index) => {
-      compatibility(friend.scores.map(Number), userData.scores.map(Number), index);
-    })
+      compatibility(
+        friend.scores.map(Number),
+        userData.scores.map(Number),
+        index
+      );
+    });
 
-    let matchIndex = function (object) {
+    let matchIndex = function(object) {
       var shortest = Number.MAX_VALUE;
       var prop;
       for (var key in object) {
@@ -30,16 +34,16 @@ module.exports = app => {
           shortest = object[key];
           prop = key;
         }
-      };
+      }
       return prop;
     };
     console.log(match);
     let flatMatch = Object.assign(...match);
     let index = matchIndex(flatMatch);
-    console.log(matchIndex(flatMatch));
-    console.log('Ideal Match', friends[matchIndex(flatMatch)]);
-
+    // console.log(matchIndex(flatMatch));
+    // console.log("Ideal Match", friends[matchIndex(flatMatch)]);
+    console.log(userData);
     friends.push(userData);
-    res.json(friends[index])
+    res.json(friends[index]);
   });
 };
